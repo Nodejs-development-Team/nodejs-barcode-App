@@ -1,0 +1,19 @@
+{
+  "name": "nodejs-barcode-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nodejs-development-Team/nodejs-barcode-App.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nodejs-development-Team/nodejs-barcode-App/issues"
+  },
+  "homepage": "https://github.com/Nodejs-development-Team/nodejs-barcode-App#readme"
+}
