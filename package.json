@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-barcode-App",
+  "version": "1.0.0",
+  "description": "> (We will use passport-local)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nodejs-development-Team/nodejs-barcode-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nodejs-development-Team/nodejs-barcode-App/issues"
+  },
+  "homepage": "https://github.com/Nodejs-development-Team/nodejs-barcode-App#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
