@@ -1,0 +1,9 @@
+app.js is main file
+
+router(folder) it will have routes
+
+view(folder) it is for ejs file
+
+connection(folder) DB connection and Schema
+/db.js(file) connection with database
+/schema.js(file) Schema

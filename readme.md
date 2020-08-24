@@ -17,7 +17,7 @@ If someone scan this bar-code, the inserted data will be shown to him.
 
 Take name, email and password from user 
 Validate if user have filled all feild  
-Validate is password is matched with confirm password 
+Validate if password is matched with confirm password 
 Check if user is exits in database or not 
 Hash the password 
 Save it in Database 
