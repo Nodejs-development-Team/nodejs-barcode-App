@@ -1,7 +1,17 @@
-# Function of our new project.
+# Setup
+## installing app dependencies
 
-# 1- Login System 
-> (We will use passport-local)
+`if using npm`
+> npm install
+<br/>
+
+`if using yarn`
+<br/>
+> yarn install
+
+# Logistics
+
+## 1- Login System `(We will use passport-local)`
 
 ## Make a Log-in system.
 > Add Bar-code to each account.
