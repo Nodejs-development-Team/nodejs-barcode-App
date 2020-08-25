@@ -1,8 +1,8 @@
 // dep. imports stated here
-const express = require('express')
-const fs = require('fs')
-const path = require('path')
-
+const express   = require('express')
+const fs        = require('fs')
+const path      = require('path')
+const morgan    = require('morgan')
 
 
 
@@ -24,6 +24,8 @@ class AppService
     _middlewares()
     {
         this.app.use(express.json())
+        // HTTP logger
+        this.app.use(morgan('tiny'))
     }
 
     /**

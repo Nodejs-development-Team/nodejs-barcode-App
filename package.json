@@ -4,8 +4,10 @@
   "description": "> (We will use passport-local)",
   "main": "./server/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server:start": "node ./server/index.js"
+    "server:start": "node ./server/index.js",
+    "server:start:dev": "nodemon ./server/index.js",
+    "client": "cd ./client && npm start",
+    "start:dev": "concurrently \"npm run server:start:dev\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -19,9 +21,12 @@
   },
   "homepage": "https://github.com/Nodejs-development-Team/nodejs-barcode-App#readme",
   "dependencies": {
+    "concurrently": "^5.3.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.10.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
     "npm": "^6.14.8"
   }
 }

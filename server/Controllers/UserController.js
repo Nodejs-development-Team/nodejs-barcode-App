@@ -27,10 +27,11 @@ class UserRoute extends RouteBase
             res.send(
                 {
                     msg:        "I can see this too",
+                    name:       "Wendell",
                     // these are read from the BODY
                     email:      req.body.email, 
                     password:   req.body.password, 
-                    userid:     req.body.uid
+                    userid:     req.body.userid
                 }
             )
 
