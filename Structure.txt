@@ -1,9 +1,8 @@
-app.js is main file
 
-router(folder) it will have routes
 
-view(folder) it is for ejs file
+1.server.js-----------> our application entry point
+2.api-routes-- application routes
 
-connection(folder) DB connection and Schema
-/db.js(file) connection with database
-/schema.js(file) Schema
+3.models-- database models
+
+4.services business logic
