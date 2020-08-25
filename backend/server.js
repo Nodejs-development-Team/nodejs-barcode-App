@@ -27,6 +27,13 @@ mongoose.connect(database, {
 
 
 
+//routes
+
+const usersRouter = require('./routes/users');
+app.use('/users', usersRouter);
+
+
+
 // Start the server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
