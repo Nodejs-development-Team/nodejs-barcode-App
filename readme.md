@@ -9,6 +9,13 @@
 <br/>
 > yarn install
 
+# Running the App
+
+## Server Side Code
+> npm run server:start
+
+> yarn run server:start
+
 # Logistics
 
 ## 1- Login System `(We will use passport-local)`
