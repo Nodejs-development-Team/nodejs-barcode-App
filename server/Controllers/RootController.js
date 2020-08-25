@@ -7,6 +7,9 @@ class RootRoute extends RouteBase
         this.configureRouter()
     }
 
+    /**
+     * FunctionOverride will defined this.router
+     */
     configureRouter()
     {
         this.router.get('/', (req, res) => {
