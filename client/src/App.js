@@ -16,10 +16,8 @@ const App = () => {
 
   const UserGetFetch = () => {
     Axios.get('/user').then((userResponse) => {
-      debugger
       console.dir(userResponse.data)
     }).catch((error) => {
-      debugger
       console.dir(error)
     })
   }
@@ -33,10 +31,8 @@ const App = () => {
     }
     
     Axios.post('/user/authenticate', data).then((userResponse) => {
-      debugger
       console.dir(userResponse.data)
     }).catch((error) => {
-      debugger
       console.dir(error)
     })
 

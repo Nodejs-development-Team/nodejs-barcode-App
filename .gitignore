@@ -2,7 +2,7 @@
 # npm install
 # or
 # yarn install
-/node_modules
+node_modules/
 # no yarn or packageLock files
 yarn.lock
 package-lock.json
