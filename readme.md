@@ -9,12 +9,24 @@
 <br/>
 > yarn install
 
+<br/> 
+
+# Project Structure and Architecture
+
+<h3>Express: Layered Data Calls</h3>
+<img src="./images/LayedArchitecture.jpg"/>
+<h3>Folder Structure Notes</h3>
+<img src="./images/FolderStructure.jpg"/>
+<h3>Express Server: Example of Api Routes</h3>
+<img src="./images/exampleRoutes.jpg"/>
+
 # Running the App
 
-## Server Side Code
-> npm run server:start
+`if using npm`
+> npm run start:dev \
 
-> yarn run server:start
+`if using yarn` 
+> yarn run start:dev
 
 # Logistics
 
