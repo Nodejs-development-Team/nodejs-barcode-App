@@ -17,4 +17,16 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+
+
+// Work in Progress
+router.route('/signin').post((req, res) => {
+  res.send({msg: 'this is the signin route'})
+})
+
+// Work in Progress
+router.route('/signout').post((req, res) => {
+  res.send({msg: 'this is the signout route'})
+});
+
 module.exports = router;
