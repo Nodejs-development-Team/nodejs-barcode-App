@@ -13,11 +13,11 @@ const TokenService = require('./../Service/TokenService')
  * @access: Public
  */
 router.post('/add', async (req, res) => {
-
   const { username, password } = req.body
-  
   try {
-
+    const userReference = await UserService.add(username, password)
+    res.send(userReference)
+    /*
     const userRef =  await UserService.getUserByUsername(username)
     // if user exist we dont try to add the record and we return the msg
     if(userRef) {
@@ -27,8 +27,7 @@ router.post('/add', async (req, res) => {
       const userRecord = await UserService.addNew(username, password)
       res.send({user: userRecord, isSuccess: true, msg: 'new User Added'})
     }
-
-
+    */
 
   } catch (error) {
     console.log(error)

@@ -30,7 +30,6 @@ function UserService() {
      * @param {string} password
      */
     const addNew = async (username, password) => {
-
         const encryptedPassword = await EncryptionService.hash(password)
         const newUser = new User({username, password: encryptedPassword})
         const UserRecord = await newUser.save()
@@ -38,9 +37,27 @@ function UserService() {
     }
 
 
+    /**
+     * Logic for adding a new user to the db
+     * @param {string} username 
+     * @param {string} password
+     */
+    const add = async (username, password) => {
+        const userRef = await getUserByUsername(username)
+        if(userRef) {
+            return {user: {}, isSuccess: false, msg: 'User already exists'}
+        } else {
+          // if user does not exist we return the following...
+          const userRecord = await addNew(username, password)
+          return {user: userRecord, isSuccess: true, msg: 'new User Added'}
+        }
+    }
+
+
     return {
         getAllUsers,
-        addNew,
+        add,
+        // addNew,
         getUserByUsername
     }
 
