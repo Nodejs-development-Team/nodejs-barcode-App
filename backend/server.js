@@ -3,11 +3,23 @@ require('dotenv').config()
 
 const express       = require('express')
 const app           = express()
-const cors          = require('cors')
+
+// attempting to avoid this... with proxy....
+// const cors          = require('cors')
+
 const mongoose      = require('mongoose')
 const Controller    = require('./Classes/ControllerClass')
+const morgan = require('morgan')
 const port          = parseInt(process.env.PORT) || 5000
-const connString    = process.env.ATLAS_URI
+
+// Used to create spaced text...
+let spaced = ''
+for(let i = 0;i < 4;i++) spaced += '\n'
+
+// TALK TO TEAM....I CANT GET READ THIS FROM .env file for some reason...
+const connString    = process.env.ATLAS_URI || "mongodb+srv://mern123:mern@123@cluster0.r2mep.gcp.mongodb.net/test?retryWrites=true&w=majority"
+
+
 /* 
     Setting up application Controllers...
     We add more right here... 
@@ -26,7 +38,10 @@ const allController = [
 async function asyncMiddlewareSetup()
 {
     // allows us to access our routes from outside the origin
-    app.use(cors())
+    // app.use(cors())
+
+    // middleware that will log all http calls to console
+    app.use(morgan('tiny'))
 
     /* 
         Allows us to read from body as JSON...
@@ -45,14 +60,21 @@ async function asyncMiddlewareSetup()
 
 async function asyncMongoConnect()
 {
+
+
     mongoose.connect(connString, {
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true
     }).then((con) => {
+        console.log(spaced)
         console.log('DB connection Successfully!');
+        console.log(spaced)
     }).catch((err)=>{
+        console.log(spaced)
+        console.log('ERROR CONNECTING TO MONGO DB')
         console.warn(err)
+        console.log(spaced)
     })
 }
 
@@ -64,7 +86,6 @@ const ApplicationServerInstance = app.listen(port,async () => {
     await asyncMiddlewareSetup()
     // then we connect to Mongo once our app starts...
     await asyncMongoConnect()
-
     // logging to tell users what paths we will have access to...
     console.log(`Server is running on port: ${port}`)
 

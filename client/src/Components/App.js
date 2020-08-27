@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import Axios from 'axios'
 
 const App = () => {
+
+  useEffect(() => {
+    readAllUsers()
+  }, 
+  [])
 
   const [userId, setUserId] = useState('')
   const [password, setPassword] = useState('')
 
   const controlHandler = (event) => {
-
     const target = event.target
     const name = target.name
     const value = target.value
-
     if(name === 'userid') {
       setUserId(value)
     } else if(name === 'password') {
@@ -22,7 +25,28 @@ const App = () => {
   }
 
 
-  // LoginScreen for now...
+
+  // HTTP CALL ONE
+  const readAllUsers = () => {
+    Axios.get('/users/readAll').then((axiosResponse) => {
+      console.dir(axiosResponse)
+    }).catch((axiosError) => {
+      console.dir(axiosError)
+    })
+  }
+
+  // HTTP CALL TWO
+  const addUser = () => {
+    Axios.post('/users/add', {username: userId, password})
+    .then((axiosResponse) => {
+      console.dir(axiosResponse)
+    }).catch((axiosError) => {
+      console.dir(axiosError)
+    })
+
+  }
+
+
   return <div>
     
     <input 
@@ -37,9 +61,15 @@ const App = () => {
       name="password"
       type="password" 
       value={password} 
-      placeholder="user id"
+      placeholder="user password"
       onChange={controlHandler}
     />
+
+     <input type="button" onClick={addUser} value="add new User"/> 
+    {/**/}
+
+
+
 
   </div>
 
