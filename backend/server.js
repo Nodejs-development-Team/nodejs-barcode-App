@@ -9,7 +9,7 @@ const app           = express()
 
 const mongoose      = require('mongoose')
 const Controller    = require('./Classes/ControllerClass')
-const morgan = require('morgan')
+const morgan        = require('morgan')
 const port          = parseInt(process.env.PORT) || 5000
 
 // Used to create spaced text...
@@ -43,6 +43,7 @@ async function asyncMiddlewareSetup()
     // middleware that will log all http calls to console
     app.use(morgan('tiny'))
 
+
     /* 
         Allows us to read from body as JSON...
         This is a built-in middleware function in Express. 
@@ -55,6 +56,15 @@ async function asyncMiddlewareSetup()
         console.log(`${index+1}.) routePath: ${ctrl.routePath}`)
         app.use(ctrl.routePath, ctrl.router)
     })
+
+
+    // Giving Credit to debanshu45
+    app.all("*", (req,res) => {
+        console.log(spaced, req, spaced)
+        res.status(404).send({msg: "Route Not Found"})
+    })
+
+
 
 }
 

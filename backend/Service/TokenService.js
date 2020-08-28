@@ -19,9 +19,8 @@ function TokenService() {
                         reject(error)
                     }
 
-                    resolve({
-                        token
-                    })
+                    // brings back a string token
+                    resolve(token)
 
                 }
             )
@@ -29,9 +28,36 @@ function TokenService() {
     }
 
 
+    const validateToken = async(token) => {
+
+        return new Promise((resolve, reject) => { 
+            // verify a token symmetric
+            jsonwebtoken.verify(token, 'secret', function(err, decoded) {
+                // default result
+                let returnObject = {
+                    isSuccess: false,
+                    decoded: {}
+                }
+
+                if(err) {
+                    reject(err)
+                }
+
+                returnObject = {
+                    isSuccess: true,
+                    decoded
+                }
+
+                resolve(returnObject)
+            });
+        })
+
+    }
+
 
     return {
-        getUserToken
+        getUserToken,
+        validateToken
     }
 }
 

@@ -9,10 +9,8 @@ function UserService() {
     const getUserByUsername = async (username) =>
     {
         try {
-            const _user = await User.findOne({username})
-            return _user
+            return await User.findOne({username})
         } catch (error) {
-            // may mean the user does not Exist...
             return null
         }
     }
@@ -21,7 +19,11 @@ function UserService() {
     /**
      * Logic for retrieving all the users from the db
      */
-    const getAllUsers = async () => User.find()
+    const getAllUsers = async (excludePassword=true) => {
+        if(excludePassword) return await User.find().select("-password")
+        return await User.find()
+    }
+
 
 
     /**
@@ -57,8 +59,7 @@ function UserService() {
     return {
         getAllUsers,
         add,
-        // addNew,
-        getUserByUsername
+        getUserByUsername,
     }
 
 }

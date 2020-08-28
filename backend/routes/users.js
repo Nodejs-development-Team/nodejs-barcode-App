@@ -1,7 +1,5 @@
 // NOTE TO ALL DEVS! router Will need to be imported to all routes!
 const router = require('express').Router()
-// This file contains all the routes for the following Model
-const User = require('./../models/user.model')
 
 // ServiceLayer
 const UserService = require('./../Service/UserService')
@@ -43,47 +41,87 @@ router.post('/add', async (req, res) => {
  */
 router.get('/readAll', async (req, res) => {
   try {
-    const allUsers = await UserService.getAllUsers()
-    res.send({allUsers})
+    const allUsersNoPass = await UserService.getAllUsers()
+    res.send(allUsersNoPass)
   } catch (error) {
-    res.send({allUsers: []})
+    res.send([])
   }
 })
 
 
 
 
-// Work in Progress
+// WORK IN PROGRESS
 router.post('/signin', async (req, res) => {
 
   const { username, password } = req.body
 
+  let badResponse = {
+    username,
+    isSuccess: false,
+    jwt: '',
+    msg: 'invalid credentials'
+  }
+
   const UserRecord = await UserService.getUserByUsername(username)
 
+  // if User does NOT exist
   if(!UserRecord) {
     console.log("!UserRecord")
-    res.send({msg: 'invalid credentials'})
+    res.send(badResponse)
   }
   if(UserRecord && UserRecord.password) {
     const isvalidpassword = await EncryptionService.verifyEncryptedPassword(password, UserRecord.password)
-
+    // would like to figure out what to send over in JWT...
     if(isvalidpassword) {
       const payload = {
-        user: {
-            id: 'need to figure out what payload we care about here...',
-        }
+          id: UserRecord.id,
+          username
       }
-      const userTokenResponse = await TokenService.getUserToken(payload)
-      res.send(userTokenResponse)
-    }
+      const jwt = await TokenService.getUserToken(payload)
+      let goodResponse = {
+        username,
+        isSuccess: true,
+        jwt,
+        msg: 'user is authenticated'
+      }
+      res.send(goodResponse)
+    }// end of if user has valid pw logic...
+  } else {
+    res.send(badResponse)
   }
-  res.send({msg: 'invalid credentials'})
-
 })
 
-// Work in Progress
+// WORK IN PROGRESS
 router.post('/signout', (req, res) => {
   res.send({msg: 'this is the signout route'})
+})
+
+// WORK IN PROGRESS
+/**
+ * @description: Route will be used to validate a users token
+ * @access: Public
+ */
+router.post('/validateToken', async (req, res) => {
+
+  try {
+    
+    const { jwt } = req.body
+    const tokenValidationObject = await TokenService.validateToken(jwt)
+    res.send(tokenValidationObject)
+
+  } catch (error) {
+
+    console.log('\n\n\n')
+    console.log('I DONT THIS THIS WORKED BROTHER')
+    console.log('\n\n\n')
+
+    res.send({
+      isSuccess: false,
+      decoded: {}
+    })
+
+  }
 })
 
 

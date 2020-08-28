@@ -57,7 +57,6 @@ Take email and password from user
 Check if user is that email is present in database or not 
 Dehash password and compare 
 If password matched send user to sucess page, if not send user to login page 
-Set cookies
 
 ## Logout
 
