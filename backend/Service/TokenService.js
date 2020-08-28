@@ -1,6 +1,7 @@
 const jsonwebtoken  = require('jsonwebtoken')
+const SettingsService = require('./SettingsService')
 
-
+const JWTSettings = SettingsService.getJwt()
 
 function TokenService() {
 
@@ -11,17 +12,15 @@ function TokenService() {
 
             jsonwebtoken.sign(
                 payload, 
-                "secret",//should come from .env or something...
-                { expiresIn: '1d' },
+                JWTSettings.secret,
+                { expiresIn: JWTSettings.expiresin },
                 (error, token) => 
                 {
                     if(error) {
                         reject(error)
                     }
-
                     // brings back a string token
                     resolve(token)
-
                 }
             )
         })
@@ -32,7 +31,7 @@ function TokenService() {
 
         return new Promise((resolve, reject) => { 
             // verify a token symmetric
-            jsonwebtoken.verify(token, 'secret', function(err, decoded) {
+            jsonwebtoken.verify(token, JWTSettings.secret, function(err, decoded) {
                 // default result
                 let returnObject = {
                     isSuccess: false,

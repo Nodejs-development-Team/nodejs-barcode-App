@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { AppContext } from './../App'
 
 // Other Libs
 import { Redirect } from 'react-router-dom'
@@ -13,9 +14,11 @@ export default () => {
   const [userId, setUserId]       = useState('Rebecca Amos')
   const [password, setPassword]   = useState('fatface')
 
-  // TEMP STATE....THIS SHOULD COME FROM REDUX OR CONTEXT OR SOMETHING...
-  const [isLoggedin, setIsLoggedIn] = useState(false)
 
+  // GlobalAppStateContext Handled here...
+  const GlobalApplicationContext = useContext(AppContext)
+  const isLoggedin =   GlobalApplicationContext.isAuthenticated
+  const setIsLoggedIn = GlobalApplicationContext.setIsAuthenticated
 
   /**
    * Function is used to bind control of userid and password state 
@@ -34,27 +37,26 @@ export default () => {
   }
 
 
+
   /**
    * Function is used to sign the user in, triggered when user clicks on the signin button
    */
+
   const signIn = async () => {
     try {
       const goodAxiosResponse = await UserApiService.signin(userId, password)
       if(goodAxiosResponse && goodAxiosResponse.data) {
         if(goodAxiosResponse.data.isSuccess) {
           TokenService.setTokenToLocalStorage(goodAxiosResponse.data.jwt)
-          // THEN WE NEED TO TELL OUR APP WE HAVE BEEN AUTHENTICATED
-          setIsLoggedIn(true)// THIS IS BAD WILL NEED TO FIX THIS
-
-          
+          setIsLoggedIn(true)
         }
         else TokenService.removeTokenFromStorage()
       }
     } catch (error) {
-      debugger
       console.dir(error)
     }
   }
+
 
   const buildForm = () => {
     return <div>
@@ -85,7 +87,7 @@ export default () => {
 
   }
 
-
+  // SHOULD HAVE MORE LOGIC...LIKE IT SHOULD KNOW THAT THE MIDDLEWARE IS SETUP...WILL HAVE TO WORK ON THIS
   return isLoggedin ? <Redirect to="/"/> : buildForm()
 
 }

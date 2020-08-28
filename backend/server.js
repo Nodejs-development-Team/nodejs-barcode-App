@@ -1,20 +1,35 @@
 // allows us to read from .env file from process.env object
 require('dotenv').config()
 
-const express       = require('express')
-const app           = express()
+const express           = require('express')
+const app               = express()
 
 // attempting to avoid this... with proxy....
-// const cors          = require('cors')
+const cors              = require('cors')
 
-const mongoose      = require('mongoose')
-const Controller    = require('./Classes/ControllerClass')
-const morgan        = require('morgan')
-const port          = parseInt(process.env.PORT) || 5000
+const mongoose          = require('mongoose')
+const Controller        = require('./Classes/ControllerClass')
+const morgan            = require('morgan')
+const port              = parseInt(process.env.PORT) || 5000
+
+// Service Imports
+const SettingsService   = require('./Service/SettingsService')
+
+// reading JWT settings from config...
+const JWT_SECRET        = process.env.JWT_SECRET
+const JWT_EXPIRESIN     = process.env.JWT_EXPIRESIN
+
+SettingsService.setJwt(JWT_SECRET, JWT_EXPIRESIN)
+
 
 // Used to create spaced text...
 let spaced = ''
 for(let i = 0;i < 4;i++) spaced += '\n'
+
+console.log(spaced)
+console.log('JWT_SECRET ', JWT_SECRET)
+console.log('JWT_EXPIRESIN ', JWT_EXPIRESIN)
+console.log(spaced)
 
 // TALK TO TEAM....I CANT GET READ THIS FROM .env file for some reason...
 const connString    = process.env.ATLAS_URI || "mongodb+srv://mern123:mern@123@cluster0.r2mep.gcp.mongodb.net/test?retryWrites=true&w=majority"
@@ -38,7 +53,7 @@ const allController = [
 async function asyncMiddlewareSetup()
 {
     // allows us to access our routes from outside the origin
-    // app.use(cors())
+    app.use(cors())
 
     // middleware that will log all http calls to console
     app.use(morgan('tiny'))
