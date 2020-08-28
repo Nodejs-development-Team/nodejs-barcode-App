@@ -33,6 +33,7 @@ export default () => {
         console.log(tokenValidationResponse.data.isSuccess)
         if(tokenValidationResponse && tokenValidationResponse.data && tokenValidationResponse.data.isSuccess) {
           // WE NEED TO REDIRECT THE USER TO MAIN... LoginPage will do this for us....
+          alert('Token is still Valid, need to redir user to main(root)')
         }
 
       } catch (error) {
