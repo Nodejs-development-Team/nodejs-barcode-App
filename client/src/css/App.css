@@ -57,6 +57,7 @@ label span{
 }
 
 input.formA {
+  text-align: center;
   display: block;
   width: 100%;
   margin-top: 5px;
@@ -68,8 +69,9 @@ input.formA {
 }
 
 input.formA:focus {
-  text-align: center;
+  text-align: left;
 }
+
 
 button{
   display: block;
