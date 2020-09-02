@@ -1,0 +1,8 @@
+.flexWrap {
+    display: flex;
+}
+
+.flexWrap.center {
+    align-items: center;
+    justify-content: center;
+}

@@ -5,13 +5,8 @@
   font-family: 'Nunito', sans-serif;
 }
 
-body{
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+body {
+
   font-family: 'Nunito', sans-serif;
 }
 
@@ -61,15 +56,19 @@ label span{
   text-transform: uppercase;
 }
 
-input{
+input.formA {
   display: block;
   width: 100%;
   margin-top: 5px;
   font-size: 16px;
   padding-bottom: 5px;
   border-bottom: 1px solid rgba(109, 93, 93, 0.4);
-  text-align: center;
   font-family: 'Nunito', sans-serif; 
+  padding-left: 15px;
+}
+
+input.formA:focus {
+  text-align: center;
 }
 
 button{
@@ -89,23 +88,17 @@ button{
   text-transform: uppercase;
   font-weight: 600;
   font-family: 'Nunito', sans-serif;
-  background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+  background-image: -webkit-linear-gradient(left, #7579ff, #b224ef);
+  transition: background-image 3s ease-in-out;
 }
 
 .submit:hover{
-  background: -webkit-linear-gradient(left, #b224ef, #7579ff);
+  background-image: -webkit-linear-gradient(left, #b224ef, #7579ff);
 }
 
-.forgot-pass{
-  margin-top: 15px;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: #0c0101;
+
+.redOnHover:hover{
   cursor: pointer;
-}
-
-.forgot-pass:hover{
   color: red;
 }
 

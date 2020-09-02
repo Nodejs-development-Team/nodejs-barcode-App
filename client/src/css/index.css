@@ -1,0 +1,8 @@
+html {
+    background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+}
+
+html, body, #root, .fullDim {
+    height: 100%;
+    width: 100%;
+}
