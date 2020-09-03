@@ -1,3 +1,10 @@
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+}
+
 html {
     background: -webkit-linear-gradient(left, #7579ff, #b224ef);
 }
@@ -5,4 +12,19 @@ html {
 html, body, #root, .fullDim {
     height: 100%;
     width: 100%;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.fullHeight {
+    height: 100%;
+}
+
+.relative {
+    position: relative;
+}
+.absolute {
+    position: absolute;
 }

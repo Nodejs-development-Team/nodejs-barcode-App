@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import './css/index.css'
 import './css/flexbox.css'
 import './css/App.css'
-
+import './css/Pill.css'
 
 
 import App from './App'

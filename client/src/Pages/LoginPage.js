@@ -4,14 +4,18 @@ import Signup from './Signup'
 // Other Libs
 import { Redirect } from "react-router-dom";
 
+import { Pill } from './../Components/Pill'
+
 // SERVICES INJECTED HERE
 import UserApiService from "./../Service/API/UserApiService";
 import TokenService from "./../Service/Security/TokenService";
 
 export default () => {
   // STATES FOR THIS COMPONENT ARE DECLARED HERE
-  const [userId, setUserId] = useState("Rebecca Amos");
-  const [password, setPassword] = useState("fatface");
+  const [email, setEmail] = useState("Rebecca Amos")  
+  const [password, setPassword] = useState("fatface")
+  const [showPassword, setShowPassword] = useState(false)
+  const [isSignupPane, setIsSignupPane] = useState(false)
 
   // GlobalAppStateContext Handled here...
   const GlobalApplicationContext = useContext(AppContext);
@@ -19,13 +23,13 @@ export default () => {
   const setIsLoggedIn = GlobalApplicationContext.setIsAuthenticated;
 
   /**
-   * Function is used to bind control of userid and password state
+   * Function is used to bind control of email and password state
    */
   const controlHandler = (event) => {
     const target = event.target;
     const { name, value } = target;
-    if (name === "userid") {
-      setUserId(value);
+    if (name === "email") {
+      setEmail(value);
     } else if (name === "password") {
       setPassword(value);
     } else {
@@ -40,7 +44,7 @@ export default () => {
 
   const signIn = async () => {
     try {
-      const goodAxiosResponse = await UserApiService.signin(userId, password);
+      const goodAxiosResponse = await UserApiService.signin(email, password);
       if (goodAxiosResponse && goodAxiosResponse.data) {
         if (goodAxiosResponse.data.isSuccess) {
           TokenService.setTokenToLocalStorage(goodAxiosResponse.data.jwt);
@@ -51,34 +55,38 @@ export default () => {
       console.dir(error);
     }
   };
+  
+  const toggle = () => setIsSignupPane(!isSignupPane)
 
-  function toggle() {
-      console.log('inside toggle');
-      document.querySelector(".cont").classList.toggle("s-signup");
+  const passwordShowToggle = () => {
+    setShowPassword(!showPassword)
   }
 
   const buildForm = () => {
 
     const _formClass = "formA"
+    let _contClassName = 'cont'
+    if(isSignupPane) _contClassName += ' s-signup'
 
     return (
-      <div className="center flexWrap fullDim">
-        <div className="cont">
-          
-        <div className="form sign-in">
+      <form className="center flexWrap fullDim">
+        <div className={_contClassName}>
+          <div className="form sign-in">
             <h2>Sign In</h2>
             <label>
               <span>Email Address</span>
-              <input className={_formClass} type="email" name="email" />
+              <input value={email} onChange={controlHandler} className={_formClass} type="email" name="email" />
             </label>
             <label>
               <span>Password</span>
-              <input className={_formClass} type="password" name="password" />
+              <div className="flexWrap">
+                <input value={password} onChange={controlHandler} className={_formClass} type={showPassword ? "text" : "password"} name="password" />
+                <Pill color="white" leftText="hide" rightText="show" size="medium" isActive={showPassword} onClick={passwordShowToggle}/>
+              </div>
             </label>
             <button className="submit" type="button">Sign In</button>
             <p className="forgot-pass center flexWrap"><span className="redOnHover">Forgot Password?</span></p>
           </div>
-
           <div className="sub-cont">
             <div className="img">
               <div className="img-text m-up">
@@ -96,11 +104,10 @@ export default () => {
                 <span className="m-in">Sign In</span>
               </div>
             </div>
-            <Signup></Signup>
+            <Signup/>
           </div>
-
         </div>
-      </div>
+      </form>
     );
   };
 

@@ -2,7 +2,20 @@
     display: flex;
 }
 
+.flexWrap > .flex-item {
+    flex: 1;
+}
+
+.flexWrap > .flex-item.none {
+    flex: 0;
+}
+
+
 .flexWrap.center {
     align-items: center;
     justify-content: center;
+}
+
+.evenlySpaced {
+    justify-content: space-evenly;
 }

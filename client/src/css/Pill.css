@@ -1,0 +1,41 @@
+.pill {
+    border-radius: 15px;
+    display: flex;
+    background: white;
+    cursor: pointer;
+}
+
+.pill * {
+    color: black;
+}
+
+.pill.medium {
+    width: 200px;
+}
+
+.pillButtonWrapper {
+    border-radius: 15px;
+    border: 1px solid #303030;
+}
+
+.pillButtonWrapper > .pillButton {
+    background: #f1f1f1;
+    height: 100%;
+    width: 50%;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;    
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+    transition: border-radius 1s ease-in-out;
+}
+
+.pillButtonWrapper.active > .pillButton {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.pill .pillButtonWrapper .flex-item {
+    transition: flex 1s ease-in-out;
+}
