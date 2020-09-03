@@ -7,10 +7,10 @@ import { Redirect } from "react-router-dom";
 import { Pill } from './../Components/Pill'
 
 // SERVICES INJECTED HERE
-import UserApiService from "./../Service/API/UserApiService";
-import TokenService from "./../Service/Security/TokenService";
+import UserApiService from "./../Service/API/UserApiService"
+import TokenService from "./../Service/Security/TokenService"
 
-export default () => {
+const LoginPage = ({signIn}) => {
   // STATES FOR THIS COMPONENT ARE DECLARED HERE
   const [email, setEmail] = useState("Rebecca Amos")  
   const [password, setPassword] = useState("fatface")
@@ -36,26 +36,8 @@ export default () => {
       // Should Never hit here!
       console.log(`incorrect binding, no control with name ---> ${name}`);
     }
-  };
+  }
 
-  /**
-   * Function is used to sign the user in, triggered when user clicks on the signin button
-   */
-
-  const signIn = async () => {
-    try {
-      const goodAxiosResponse = await UserApiService.signin(email, password);
-      if (goodAxiosResponse && goodAxiosResponse.data) {
-        if (goodAxiosResponse.data.isSuccess) {
-          TokenService.setTokenToLocalStorage(goodAxiosResponse.data.jwt);
-          setIsLoggedIn(true);
-        } else TokenService.removeTokenFromStorage();
-      }
-    } catch (error) {
-      console.dir(error);
-    }
-  };
-  
   const toggle = () => setIsSignupPane(!isSignupPane)
 
   const passwordShowToggle = () => {
@@ -84,7 +66,7 @@ export default () => {
                 <Pill color="white" leftText="hide" rightText="show" size="medium" isActive={showPassword} onClick={passwordShowToggle}/>
               </div>
             </label>
-            <button className="submit" type="button">Sign In</button>
+            <button className="submit" onClick={() => signIn(email, password)} type="button">Sign In</button>
             <p className="forgot-pass center flexWrap"><span className="redOnHover">Forgot Password?</span></p>
           </div>
           <div className="sub-cont">
@@ -113,4 +95,8 @@ export default () => {
 
   // SHOULD HAVE MORE LOGIC...LIKE IT SHOULD KNOW THAT THE MIDDLEWARE IS SETUP...WILL HAVE TO WORK ON THIS
   return isLoggedin ? <Redirect to="/" /> : buildForm();
-};
+}
+
+
+// EXPOSING THE COMPONENT
+export default LoginPage

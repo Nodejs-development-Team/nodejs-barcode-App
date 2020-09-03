@@ -7,8 +7,6 @@ const EncryptionService = require('./../Service/EncryptionService')
 const TokenService = require('./../Service/TokenService')
 
 
-
-
 /**
  * @description: Route will be used to add a new user to the db
  * @access: Public
@@ -18,18 +16,6 @@ router.post('/add', async (req, res) => {
   try {
     const userReference = await UserService.add(username, password)
     res.send(userReference)
-    /*
-    const userRef =  await UserService.getUserByUsername(username)
-    // if user exist we dont try to add the record and we return the msg
-    if(userRef) {
-      res.send({user: {}, isSuccess: false, msg: 'User already exists'})
-    } else {
-      // if user does not exist we return the following...
-      const userRecord = await UserService.addNew(username, password)
-      res.send({user: userRecord, isSuccess: true, msg: 'new User Added'})
-    }
-    */
-
   } catch (error) {
     console.log(error)
     res.send({user: {}, isSuccess: false})

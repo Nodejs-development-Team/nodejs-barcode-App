@@ -18,8 +18,11 @@ const SettingsService   = require('./Service/SettingsService')
 // reading JWT settings from config...
 const JWT_SECRET        = process.env.JWT_SECRET
 const JWT_EXPIRESIN     = process.env.JWT_EXPIRESIN
+const SkipAuth          = process.env.skipAuthentication === "true"
 
-SettingsService.setJwt(JWT_SECRET, JWT_EXPIRESIN)
+SettingsService.setJwt(JWT_SECRET, JWT_EXPIRESIN, SkipAuth)
+
+
 
 
 // Used to create spaced text...
@@ -70,6 +73,11 @@ async function asyncMiddlewareSetup()
     allController.forEach((ctrl, index) => {
         console.log(`${index+1}.) routePath: ${ctrl.routePath}`)
         app.use(ctrl.routePath, ctrl.router)
+    })
+
+    app.get('/authSettings', (req, res) => {
+        // res gets proxied to root
+        res.send({SkipAuth})
     })
 
 

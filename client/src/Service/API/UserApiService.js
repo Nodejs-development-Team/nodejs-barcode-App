@@ -2,6 +2,9 @@ import Axios from 'axios'
 
 function UserService() {
 
+
+    const getAuthSettings = async () => Axios.get('/authSettings')
+
     /**
      * Function will be used to make HTTP calls to sign in where return will have
      * @param {string} username 
@@ -19,6 +22,7 @@ function UserService() {
 
     // public functions
     return {
+        getAuthSettings,
         signin,
         validateToken
     }

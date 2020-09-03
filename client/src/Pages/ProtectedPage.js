@@ -9,9 +9,9 @@ const ProtectedPage = props => {
       const isLoggedin =   GlobalApplicationContext.isAuthenticated
 
     useEffect(() => {
-        debugger
         console.log('THIS IS A PROTECTED ROUTE!')
-        console.log(isLoggedin)
+        console.log({isLoggedin})
+        console.log('THIS IS A PROTECTED ROUTE!')
     }, [])
 
     // if user is Authenticated will go to whatever wrapper component was passed else will be redirected out to the Signin page

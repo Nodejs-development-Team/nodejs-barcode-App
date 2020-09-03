@@ -7,7 +7,8 @@
     "server:start": "node ./backend/server.js",
     "server:start:dev": "nodemon ./backend/server.js",
     "client": "cd ./client && npm start",
-    "start:dev": "concurrently \"npm run server:start:dev\" \"npm run client\""
+    "start:dev": "concurrently -n 'server,client' -c 'red,green' \"npm run server:start:dev\" \"npm run client\"",
+    "start": "npm run start:dev"
   },
   "repository": {
     "type": "git",

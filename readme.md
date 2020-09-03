@@ -23,10 +23,10 @@
 # Running the App
 
 `if using npm`
-> npm run start:dev \
+> npm run start 
 
 `if using yarn` 
-> yarn run start:dev
+> yarn run start
 
 # Logistics
 

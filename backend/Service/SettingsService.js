@@ -2,7 +2,8 @@ function SettingsService()
 {
     let jwt = {
         secret: '',
-        expiresin: ''
+        expiresin: '',
+        skipAuth: false
     }
 
     const getJwt = () => {
