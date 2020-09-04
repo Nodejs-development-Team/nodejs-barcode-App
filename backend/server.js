@@ -14,6 +14,7 @@ const port              = parseInt(process.env.PORT) || 5000
 
 // Service Imports
 const SettingsService   = require('./Service/SettingsService')
+const LoggingService    = require('./Service/LoggingService')
 
 // reading JWT settings from config...
 const JWT_SECRET        = process.env.JWT_SECRET
@@ -22,17 +23,13 @@ const SkipAuth          = process.env.skipAuthentication === "true"
 
 SettingsService.setJwt(JWT_SECRET, JWT_EXPIRESIN, SkipAuth)
 
+const isDevMode = process.env.MODE.toLowerCase() === "development"
 
 
-
-// Used to create spaced text...
-let spaced = ''
-for(let i = 0;i < 4;i++) spaced += '\n'
-
-console.log(spaced)
-console.log('JWT_SECRET ', JWT_SECRET)
-console.log('JWT_EXPIRESIN ', JWT_EXPIRESIN)
-console.log(spaced)
+if(isDevMode) {
+    LoggingService.infoLog(`JWT_SECRET: ${JWT_SECRET}`, 3, 2)
+    LoggingService.infoLog(`JWT_EXPIRESIN: ${JWT_EXPIRESIN}`, 3, 2)
+}
 
 // TALK TO TEAM....I CANT GET READ THIS FROM .env file for some reason...
 const connString    = process.env.ATLAS_URI || "mongodb+srv://mern123:mern@123@cluster0.r2mep.gcp.mongodb.net/test?retryWrites=true&w=majority"
@@ -43,10 +40,12 @@ const connString    = process.env.ATLAS_URI || "mongodb+srv://mern123:mern@123@c
     We add more right here... 
     and we store in this path...
 */
-const allController = [
-    new Controller({routePath: '/users', router: require('./routes/users')})
+const allControllers = [
+    new Controller({routePath: '/users', router: require('./routes/users')}),
 ]
 
+// WE ONLY ADD THIS ROUTE IF WE ARE IN DEV MODE
+if(isDevMode) allControllers.push(new Controller({routePath: '/utility', router: require('./routes/utility')}))
 
 // SETTING UP FUNCTIONS HERE
 
@@ -70,8 +69,7 @@ async function asyncMiddlewareSetup()
     app.use(express.json())
 
     // setting up our application routes
-    allController.forEach((ctrl, index) => {
-        console.log(`${index+1}.) routePath: ${ctrl.routePath}`)
+    allControllers.forEach((ctrl, index) => {
         app.use(ctrl.routePath, ctrl.router)
     })
 
@@ -83,7 +81,6 @@ async function asyncMiddlewareSetup()
 
     // Giving Credit to debanshu45
     app.all("*", (req,res) => {
-        console.log(spaced, req, spaced)
         res.status(404).send({msg: "Route Not Found"})
     })
 
@@ -94,20 +91,19 @@ async function asyncMiddlewareSetup()
 async function asyncMongoConnect()
 {
 
-
     mongoose.connect(connString, {
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true
     }).then((con) => {
-        console.log(spaced)
-        console.log('DB connection Successfully!');
-        console.log(spaced)
+
+        LoggingService.infoLog("DB connection Successfully!", 3, 2)
+        LoggingService.confirmLog("visit /utility/displaysRoutes to get information about available routes", 3, 2)
+
     }).catch((err)=>{
-        console.log(spaced)
-        console.log('ERROR CONNECTING TO MONGO DB')
+        LoggingService.importantLog("ERROR CONNECTING TO MONGO DB", 3, 2)
         console.warn(err)
-        console.log(spaced)
+
     })
 }
 
@@ -120,6 +116,7 @@ const ApplicationServerInstance = app.listen(port,async () => {
     // then we connect to Mongo once our app starts...
     await asyncMongoConnect()
     // logging to tell users what paths we will have access to...
-    console.log(`Server is running on port: ${port}`)
+    LoggingService.infoLog(`Server is running on port: ${port}`, 3, 2)
+    // console.log(`Server is running on port: ${port}`)
 
 })

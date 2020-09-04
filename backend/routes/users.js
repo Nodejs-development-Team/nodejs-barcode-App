@@ -5,8 +5,20 @@ const router = require('express').Router()
 const UserService = require('./../Service/UserService')
 const EncryptionService = require('./../Service/EncryptionService')
 const TokenService = require('./../Service/TokenService')
+const RoutingOptionService = require('./../Service/RoutingOptionService')
 
 
+
+
+
+const usersRouteLogger = new RoutingOptionService()
+const usersRoutingGroup = usersRouteLogger.newGroup('users')
+
+
+
+
+
+usersRoutingGroup.addRoute('POST','/users/add', 'Public', 'Route will be used to add a new user to the db')
 /**
  * @description: Route will be used to add a new user to the db
  * @access: Public
@@ -24,6 +36,14 @@ router.post('/add', async (req, res) => {
 
 
 
+
+// THIS ALLOWS ME TO VIEW INFO IN MY ROUTE
+usersRoutingGroup.addRoute(
+  'GET',
+  '/users/readAll', 
+  'Public', 
+  'Route will be used to read all users from the database'
+)
 /**
  * @description: Route will be used to read all users from the database
  * @access: Public
@@ -39,7 +59,13 @@ router.get('/readAll', async (req, res) => {
 
 
 
-
+// THIS ALLOWS ME TO VIEW INFO IN MY ROUTE
+usersRoutingGroup.addRoute(
+  'post',
+  '/users/signin', 
+  'Public', 
+  'Route will be used to sign a user in.'
+)
 // WORK IN PROGRESS
 router.post('/signin', async (req, res) => {
 
@@ -81,11 +107,19 @@ router.post('/signin', async (req, res) => {
   }
 })
 
+
+
+
+usersRoutingGroup.addRoute('post','/users/signout', 'Public', 'Route will be used to sign a user out.')
 // WORK IN PROGRESS
 router.post('/signout', (req, res) => {
   res.send({msg: 'this is the signout route'})
 })
 
+
+
+
+usersRoutingGroup.addRoute('post','/users/validateToken', 'Public', 'Route will be used to validate a users token')
 // WORK IN PROGRESS
 /**
  * @description: Route will be used to validate a users token
@@ -114,6 +148,8 @@ router.post('/validateToken', async (req, res) => {
 })
 
 
+
+
 // USE THIS IF YOU WISH TO DELETE ALL USER RECORDS...CAUTION
 /*
 router.get('/deleteAll',async (req, res) => {
@@ -129,4 +165,4 @@ router.get('/deleteAll',async (req, res) => {
 
 
 
-module.exports = router;
+module.exports = router
