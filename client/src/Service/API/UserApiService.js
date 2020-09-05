@@ -20,11 +20,15 @@ function UserService() {
      */
     const validateToken = jwt => Axios.post('/users/validateToken', {jwt})
 
+
+    const Signup = (username, password) => Axios.post('/users/add', {username, password})
+
     // public functions
     return {
         getAuthSettings,
         signin,
-        validateToken
+        validateToken,
+        Signup
     }
 }
 

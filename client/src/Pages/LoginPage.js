@@ -7,8 +7,8 @@ import { Redirect } from "react-router-dom";
 import { Pill } from './../Components/Pill'
 
 // SERVICES INJECTED HERE
-import UserApiService from "./../Service/API/UserApiService"
-import TokenService from "./../Service/Security/TokenService"
+// import UserApiService from "./../Service/API/UserApiService"
+// import TokenService from "./../Service/Security/TokenService"
 
 const LoginPage = ({signIn}) => {
   // STATES FOR THIS COMPONENT ARE DECLARED HERE
@@ -20,7 +20,7 @@ const LoginPage = ({signIn}) => {
   // GlobalAppStateContext Handled here...
   const GlobalApplicationContext = useContext(AppContext);
   const isLoggedin = GlobalApplicationContext.isAuthenticated;
-  const setIsLoggedIn = GlobalApplicationContext.setIsAuthenticated;
+  // const setIsLoggedIn = GlobalApplicationContext.setIsAuthenticated;
 
   /**
    * Function is used to bind control of email and password state
@@ -39,19 +39,18 @@ const LoginPage = ({signIn}) => {
   }
 
   const toggle = () => setIsSignupPane(!isSignupPane)
+  const passwordShowToggle = () => setShowPassword(!showPassword)
 
-  const passwordShowToggle = () => {
-    setShowPassword(!showPassword)
-  }
 
   const buildForm = () => {
 
-    const _formClass = "formA"
+    const _formClass = 'formA'
     let _contClassName = 'cont'
+
     if(isSignupPane) _contClassName += ' s-signup'
 
     return (
-      <form className="center flexWrap fullDim">
+      <form id="authenticationPage" className="center flexWrap fullDim">
         <div className={_contClassName}>
           <div className="form sign-in">
             <h2>Sign In</h2>

@@ -1,8 +1,9 @@
 // allows us to read from .env file from process.env object
 require('dotenv').config()
 
-const express           = require('express')
-const app               = express()
+const   express         = require('express')
+const   app             = express()
+let     serverInst      = undefined
 
 // attempting to avoid this... with proxy....
 const cors              = require('cors')
@@ -79,6 +80,15 @@ async function asyncMiddlewareSetup()
     })
 
 
+    /*
+    // route will shut off API for us...
+    app.get('/off', (req, res) => {
+        if(serverInst && serverInst.close) serverInst.close()
+        res.json({isOff: 'YES'})
+    })
+    */
+
+
     // Giving Credit to debanshu45
     app.all("*", (req,res) => {
         res.status(404).send({msg: "Route Not Found"})
@@ -96,10 +106,8 @@ async function asyncMongoConnect()
         useCreateIndex: true,
         useUnifiedTopology: true
     }).then((con) => {
-
         LoggingService.infoLog("DB connection Successfully!", 3, 2)
         LoggingService.confirmLog("visit /utility/displaysRoutes to get information about available routes", 3, 2)
-
     }).catch((err)=>{
         LoggingService.importantLog("ERROR CONNECTING TO MONGO DB", 3, 2)
         console.warn(err)
@@ -108,15 +116,12 @@ async function asyncMongoConnect()
 }
 
 
-// Start the server
-const ApplicationServerInstance = app.listen(port,async () => {
-
+// Starting the server
+serverInst = app.listen(port, async () => {
     // we are going to settup middleware right here...
     await asyncMiddlewareSetup()
     // then we connect to Mongo once our app starts...
     await asyncMongoConnect()
     // logging to tell users what paths we will have access to...
     LoggingService.infoLog(`Server is running on port: ${port}`, 3, 2)
-    // console.log(`Server is running on port: ${port}`)
-
 })
