@@ -15,6 +15,15 @@ function UserService() {
         }
     }
 
+    const getUserByEmail = async (email) =>
+    {
+        try {
+            return await User.findOne({email})
+        } catch (error) {
+            return null
+        }
+    }
+
 
     /**
      * Logic for retrieving all the users from the db
@@ -31,9 +40,14 @@ function UserService() {
      * @param {string} username 
      * @param {string} password
      */
-    const addNew = async (username, password) => {
+    const addNew = async (username, password, email) => {
+        console.log(`addNew: username: ${username} password: ${password} email: ${email}`)
         const encryptedPassword = await EncryptionService.hash(password)
-        const newUser = new User({username, password: encryptedPassword})
+        const newUser = new User({
+            username, 
+            password: encryptedPassword, 
+            email
+        })
         const UserRecord = await newUser.save()
         return UserRecord
     }
@@ -44,13 +58,13 @@ function UserService() {
      * @param {string} username 
      * @param {string} password
      */
-    const add = async (username, password) => {
+    const add = async (username, password, email) => {
         const userRef = await getUserByUsername(username)
         if(userRef) {
             return {user: {}, isSuccess: false, msg: 'User already exists'}
         } else {
           // if user does not exist we return the following...
-          const userRecord = await addNew(username, password)
+          const userRecord = await addNew(username, password, email)
           return {user: userRecord, isSuccess: true, msg: 'new User Added'}
         }
     }
@@ -60,6 +74,7 @@ function UserService() {
         getAllUsers,
         add,
         getUserByUsername,
+        getUserByEmail
     }
 
 }

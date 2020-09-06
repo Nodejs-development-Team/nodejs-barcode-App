@@ -21,10 +21,7 @@ export default () => {
   
   useEffect(async () => {
 
-    try {
-
-      debugger
-      
+    try {      
       // FINDING OUT IF WE ARE GOING TO BE SKIPPING THE AUTHENTICATION STEP AS STORED IN .env
       const skipAuthenticationRequest = await UserApiService.getAuthSettings()
 
@@ -79,6 +76,7 @@ export default () => {
 
   const signIn = async (email, password) => {
     try {
+      debugger
       const goodAxiosResponse = await UserApiService.signin(email, password);
       if (goodAxiosResponse && goodAxiosResponse.data) {
         if (goodAxiosResponse.data.isSuccess) {

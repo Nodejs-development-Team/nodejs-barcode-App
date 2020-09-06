@@ -11,7 +11,7 @@ function UserService() {
      * @param {string} password 
      * @returns { username, isSuccess, jwt,msg }
      */
-    const signin = async (username, password) => Axios.post('/users/signin', {username, password})
+    const signin = async (email, password) => Axios.post('/users/signin', {email, password})
 
 
     /**
@@ -21,7 +21,7 @@ function UserService() {
     const validateToken = jwt => Axios.post('/users/validateToken', {jwt})
 
 
-    const Signup = (username, password) => Axios.post('/users/add', {username, password})
+    const Signup = ({username, password, email}) => Axios.post('/users/add', {username, password, email})
 
     // public functions
     return {

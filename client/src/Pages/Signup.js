@@ -15,19 +15,16 @@ const Signup = () => {
   const submitForm = () => {
 
     const jsonPayload = {
-      name,
+      username: name,
       email,
       password
     }
 
-    UserApiService.Signup(email, password).then((AxiosResponse) => {
-      debugger
+    UserApiService.Signup(jsonPayload).then((AxiosResponse) => {
       console.dir(AxiosResponse)
     }).catch((axiosError) => {
-      debugger
       console.dir(axiosError)
     })
-
   }
 
   const handleFieldChange = (event) => {

@@ -12,8 +12,8 @@ import { Pill } from './../Components/Pill'
 
 const LoginPage = ({signIn}) => {
   // STATES FOR THIS COMPONENT ARE DECLARED HERE
-  const [email, setEmail] = useState("Rebecca Amos")  
-  const [password, setPassword] = useState("fatface")
+  const [email, setEmail] = useState("fatfacebaby@aol.com")  
+  const [password, setPassword] = useState("password")
   const [showPassword, setShowPassword] = useState(false)
   const [isSignupPane, setIsSignupPane] = useState(false)
 

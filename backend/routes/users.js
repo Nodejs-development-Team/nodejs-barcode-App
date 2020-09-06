@@ -7,7 +7,7 @@ const EncryptionService = require('./../Service/EncryptionService')
 const TokenService = require('./../Service/TokenService')
 const RoutingOptionService = require('./../Service/RoutingOptionService')
 
-
+const User = require('./../models/user.model')
 
 
 
@@ -24,9 +24,10 @@ usersRoutingGroup.addRoute('POST','/users/add', 'Public', 'Route will be used to
  * @access: Public
  */
 router.post('/add', async (req, res) => {
-  const { username, password } = req.body
+  const { username, password, email } = req.body
   try {
-    const userReference = await UserService.add(username, password)
+    // username, password, name
+    const userReference = await UserService.add(username, password, email)
     res.send(userReference)
   } catch (error) {
     console.log(error)
@@ -69,16 +70,16 @@ usersRoutingGroup.addRoute(
 // WORK IN PROGRESS
 router.post('/signin', async (req, res) => {
 
-  const { username, password } = req.body
+  const { email, password } = req.body
 
   let badResponse = {
-    username,
+    email,
     isSuccess: false,
     jwt: '',
     msg: 'invalid credentials'
   }
 
-  const UserRecord = await UserService.getUserByUsername(username)
+  const UserRecord = await UserService.getUserByEmail(email)
 
   // if User does NOT exist
   if(!UserRecord) {
@@ -91,11 +92,11 @@ router.post('/signin', async (req, res) => {
     if(isvalidpassword) {
       const payload = {
           id: UserRecord.id,
-          username
+          username: email
       }
       const jwt = await TokenService.getUserToken(payload)
       let goodResponse = {
-        username,
+        username: email,
         isSuccess: true,
         jwt,
         msg: 'user is authenticated'
@@ -151,7 +152,6 @@ router.post('/validateToken', async (req, res) => {
 
 
 // USE THIS IF YOU WISH TO DELETE ALL USER RECORDS...CAUTION
-/*
 router.get('/deleteAll',async (req, res) => {
   try {
     await User.deleteMany({ createdAt: { '$lte': new Date() } })
@@ -161,7 +161,6 @@ router.get('/deleteAll',async (req, res) => {
     res.status(500).send('all records NOT deleted')
   }
 })
-*/
 
 
 
