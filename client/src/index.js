@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // all CSS imports done here
-import './css/index.css'
-import './css/flexbox.css'
-import './css/App.css'
-import './css/Pill.css'
+import './css/index.css'// approved
+import './css/flexbox.css'// approved
+// import './css/App.css'// NOT approved
+import './css/SignupSignIn.css'// WIP
+import './css/Pill.css'// approved
 
 
 import App from './App'

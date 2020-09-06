@@ -25,6 +25,7 @@ html, body, #root, .fullDim {
 .relative {
     position: relative;
 }
+
 .absolute {
     position: absolute;
 }

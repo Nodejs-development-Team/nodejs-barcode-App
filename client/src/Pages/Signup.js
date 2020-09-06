@@ -51,8 +51,8 @@ const Signup = () => {
 
   return (
     <div className="form sign-up">
-      <h2>Sign Up</h2>
-      <label>
+      <h2 className="largeLabel">Sign Up</h2>
+      <label className="loginLabel">
         <span>Name</span>
         <input 
           name="name" 
@@ -62,7 +62,7 @@ const Signup = () => {
           value={name}
         />
       </label>
-      <label>
+      <label className="loginLabel">
         <span>Email</span>
         <input 
           name="email" 
@@ -73,7 +73,7 @@ const Signup = () => {
         />
       </label>
 
-      <label>
+      <label className="loginLabel">
         <span>Password</span>
         <div className="flexWrap">
           <input 
@@ -88,7 +88,7 @@ const Signup = () => {
         </div>
       </label>
 
-      <label>
+      <label className="loginLabel">
         <span>Confirm Password</span>
         <input 
           name="passwordConfirm" 

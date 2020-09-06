@@ -53,12 +53,12 @@ const LoginPage = ({signIn}) => {
       <form id="authenticationPage" className="center flexWrap fullDim">
         <div className={_contClassName}>
           <div className="form sign-in">
-            <h2>Sign In</h2>
-            <label>
+            <h2 className="largeLabel">Sign In</h2>
+            <label className="loginLabel">
               <span>Email Address</span>
               <input value={email} onChange={controlHandler} className={_formClass} type="email" name="email" />
             </label>
-            <label>
+            <label className="loginLabel">
               <span>Password</span>
               <div className="flexWrap">
                 <input value={password} onChange={controlHandler} className={_formClass} type={showPassword ? "text" : "password"} name="password" />
@@ -71,11 +71,11 @@ const LoginPage = ({signIn}) => {
           <div className="sub-cont">
             <div className="img">
               <div className="img-text m-up">
-                <h2>New here?</h2>
+                <h2 className="largeLabel">New here?</h2>
                 <p>Sign up and discover great amount of new opportunities!</p>
               </div>
               <div className="img-text m-in">
-                <h2>One of us?</h2>
+                <h2 className="largeLabel">One of us?</h2>
                 <p>
                   If you already has an account, just sign in. We've missed you!
                 </p>
