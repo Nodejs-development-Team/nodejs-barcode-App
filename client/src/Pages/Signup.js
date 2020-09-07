@@ -1,6 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+import { AppContext } from './../App'
 import { Pill } from './../Components/Pill'
 import UserApiService from './../Service/API/UserApiService'
+import TokenService from './../Service/Security/TokenService'
 
 const Signup = () => {
 
@@ -11,6 +13,9 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false)
   const passwordShowToggle = () => setShowPassword(!showPassword)
 
+  const GlobalApplicationContext = useContext(AppContext);
+  const setIsLoggedIn = GlobalApplicationContext.setIsAuthenticated;
+
 
   const submitForm = () => {
 
@@ -20,8 +25,18 @@ const Signup = () => {
       password
     }
 
-    UserApiService.Signup(jsonPayload).then((AxiosResponse) => {
-      console.dir(AxiosResponse)
+    UserApiService.Signup(jsonPayload).then((goodAxiosResponse) => {
+      if (goodAxiosResponse && goodAxiosResponse.data) {
+        if (goodAxiosResponse.data.isSuccess) {
+          TokenService.setTokenToLocalStorage(goodAxiosResponse.data.jwt);
+          setIsLoggedIn(true)
+        } else {
+          setIsLoggedIn(false)
+          TokenService.removeTokenFromStorage()
+        }
+      }
+
+
     }).catch((axiosError) => {
       console.dir(axiosError)
     })

@@ -26,9 +26,27 @@ usersRoutingGroup.addRoute('POST','/users/add', 'Public', 'Route will be used to
 router.post('/add', async (req, res) => {
   const { username, password, email } = req.body
   try {
-    // username, password, name
-    const userReference = await UserService.add(username, password, email)
-    res.send(userReference)
+    // check if user exist...
+    const doesUserExist = await UserService.getUserByEmail(email)
+    if(!doesUserExist) {
+      const UserRecord = await UserService.add(username, password, email)
+      const payload = {
+        id: UserRecord.id,
+        username: email
+      }
+      const jwt = await TokenService.getUserToken(payload)
+      let goodResponse = {
+        username: email,
+        isSuccess: true,
+        jwt,
+        msg: 'user is authenticated'
+      }
+      res.send(goodResponse)
+    } else {
+      // user already exists
+      res.send({isSuccess: false})
+    }
+
   } catch (error) {
     console.log(error)
     res.send({user: {}, isSuccess: false})
@@ -83,7 +101,6 @@ router.post('/signin', async (req, res) => {
 
   // if User does NOT exist
   if(!UserRecord) {
-    console.log("!UserRecord")
     res.send(badResponse)
   }
   if(UserRecord && UserRecord.password) {

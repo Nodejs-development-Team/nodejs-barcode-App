@@ -76,7 +76,6 @@ export default () => {
 
   const signIn = async (email, password) => {
     try {
-      debugger
       const goodAxiosResponse = await UserApiService.signin(email, password);
       if (goodAxiosResponse && goodAxiosResponse.data) {
         if (goodAxiosResponse.data.isSuccess) {
