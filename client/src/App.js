@@ -20,11 +20,9 @@ export default () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   
   useEffect(async () => {
-
     try {      
       // FINDING OUT IF WE ARE GOING TO BE SKIPPING THE AUTHENTICATION STEP AS STORED IN .env
       const skipAuthenticationRequest = await UserApiService.getAuthSettings()
-
       if(skipAuthenticationRequest && skipAuthenticationRequest.data) {
         if(skipAuthenticationRequest.data.SkipAuth) {
           setIsAuthenticated(true)
@@ -80,7 +78,6 @@ export default () => {
       if (goodAxiosResponse && goodAxiosResponse.data) {
         if (goodAxiosResponse.data.isSuccess) {
           TokenService.setTokenToLocalStorage(goodAxiosResponse.data.jwt);
-          // setIsLoggedIn(true)
           setIsAuthenticated(true)
         } else {
           setIsAuthenticated(false)

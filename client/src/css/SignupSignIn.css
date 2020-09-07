@@ -63,9 +63,8 @@ label.loginLabel span{
   }
   
   #authenticationPage input[type="button"],
-  button {
+  #authenticationPage button {
     display: block;
-    /*margin: 0 auto;*/
     width: 260px;
     height: 36px;
     border-radius: 30px;
@@ -84,8 +83,13 @@ label.loginLabel span{
   }
   
   #authenticationPage input[type="button"],
-  #authenticationPage .submit:hover{
+  #authenticationPage .submit:hover {
     background-image: -webkit-linear-gradient(left, #b224ef, #7579ff);
+  }
+
+  #authenticationPage input[type="button"]:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
   }
 
   .redOnHover:hover{

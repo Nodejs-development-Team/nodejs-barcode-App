@@ -11,7 +11,10 @@ const Signup = () => {
   const [password, setPassword] = useState("")
   const [passwordConfirm, setPasswordConfirm] = useState("")
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
   const passwordShowToggle = () => setShowPassword(!showPassword)
+  const passwordConfirmShowToggle = () => setShowConfirmPassword(!showConfirmPassword)
 
   const GlobalApplicationContext = useContext(AppContext);
   const setIsLoggedIn = GlobalApplicationContext.setIsAuthenticated;
@@ -64,6 +67,13 @@ const Signup = () => {
 
   const className="formA"
 
+  const isValid = password.length > 0 
+    && passwordConfirm.length > 0 
+    && name.length > 0
+    && email.length > 0
+    && password === passwordConfirm
+
+
   return (
     <div className="form sign-up">
       <h2 className="largeLabel">Sign Up</h2>
@@ -95,7 +105,6 @@ const Signup = () => {
             name="password" 
             className={className} 
             type={showPassword ? "text" : "password"} 
-            name="password" 
             onChange={handleFieldChange}
             value={password}
           />
@@ -103,18 +112,22 @@ const Signup = () => {
         </div>
       </label>
 
+
       <label className="loginLabel">
-        <span>Confirm Password</span>
-        <input 
-          name="passwordConfirm" 
-          className={className} 
-          type="password" 
-          onChange={handleFieldChange} 
-          value={passwordConfirm}
-        />
+      <span>Confirm Password</span>
+        <div className="flexWrap">
+          <input 
+            name="passwordConfirm" 
+            className={className} 
+            type={showConfirmPassword ? "text" : "password"} 
+            onChange={handleFieldChange}
+            value={passwordConfirm}
+          />
+          <Pill color="white" leftText="hide" rightText="show" size="medium" isActive={showConfirmPassword} onClick={passwordConfirmShowToggle}/>
+        </div>
       </label>
 
-      <input className="submit" value="Sign Up Now" type="button" onClick={submitForm}/>
+      <input disabled={!isValid} className="submit" value="Sign Up Now" type="button" onClick={submitForm}/>
 
     </div>
   );
